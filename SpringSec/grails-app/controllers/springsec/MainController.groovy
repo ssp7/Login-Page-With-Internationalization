@@ -2,7 +2,7 @@ package springsec
 
 import grails.plugin.springsecurity.annotation.Secured
 
-@Secured(['ROLE_USER'])
+@Secured(['ROLE_USER','ROLE_ADMIN'])
 class MainController {
 
     def index() {
