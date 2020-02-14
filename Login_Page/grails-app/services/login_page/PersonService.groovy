@@ -5,18 +5,18 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class PersonService {
 
-    def save(Person person) {
+    void save(Person person) {
        person.save()
     }
-    def delete(long id){
-        Person.findById(id).delete()
+    void delete(Person person){
+        person.delete()
     }
     List<Person> list(){
         Person.list()
     }
 
-    Person deleteByList(List<Long> id){
-
+    void deleteByList(List<Person> listOfPerson){
+       Person.deleteAll(listOfPerson)
     }
     void validate(Person person){
         person.validate()
