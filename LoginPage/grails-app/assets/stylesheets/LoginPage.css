@@ -1,0 +1,18 @@
+.header {
+    padding:10px;
+    text-align: left;
+    background: #006dba;
+    color: white;
+    font-size: 35px;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    height: 5%;
+    width: 100%;
+    background-color: #006dba;
+    color: white;
+    text-align: center;
+    font-size: 35px;
+
+}
