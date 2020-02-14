@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/LoginPage" />
+            <option value="$PROJECT_DIR$/Login_Page" />
             <option value="$PROJECT_DIR$/SpringSec" />
           </set>
         </option>
