@@ -13,7 +13,7 @@ class Person {
     static constraints = {
         firstName blank: false
         lastName blank: false
-        emailAddress blank: false, email: true
+        emailAddress blank: false, email: true, unique: true
         userName blank: false, unique: true
         password blank: false, minSize: 8, maxSize: 20
     }

@@ -12,7 +12,7 @@ class PersonServiceSpec extends Specification implements ServiceUnitTest<PersonS
         mockDomain Person
     }
 
-    void "Test to find person object"() {
+    void "Test for service"() {
         when: "We save person objects"
         Person.saveAll(
                 new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678"),
@@ -40,11 +40,48 @@ class PersonServiceSpec extends Specification implements ServiceUnitTest<PersonS
         service.delete(person)
         then:
         Person.count == 2
+
         when: "We try to delete a list of person objects by service then they should be able to be deleted"
         List<Person> listPerson = [Person.get(0),Person.get(1)]
         service.deleteByList(listPerson)
         then:
-        Person.count == 1
+        Person.count == 3
     }
 
+    void "Test for error message"(){
+        given: "We save person objects"
+        Person person = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid", userName: "spy2", password: "1232234234")
+        expect:
+        !person.validate()
+        person.hasErrors()
+        person.errors['emailAddress'].code == 'email.invalid'
+
+        when:
+        person.emailAddress = "valid@valid.com"
+        then:
+        person.validate()
+        !person.hasErrors()
+
+        when: "first name is blank then it should throw error"
+        person.firstName = ''
+        then:
+        !person.validate()
+        person.hasErrors()
+        person.errors['firstName'].code == 'blank'
+
+        when:
+        person.password = '2wef'
+        then:
+        !person.validate()
+        person.hasErrors()
+        person.errors['password'].code == 'minSize.notmet'
+
+        when:
+        person.password = '1234567891234567891223'
+        then:
+        !person.validate()
+        person.hasErrors()
+        person.errors['password'].code == 'maxSize.exceeded'
+
+    }
 }

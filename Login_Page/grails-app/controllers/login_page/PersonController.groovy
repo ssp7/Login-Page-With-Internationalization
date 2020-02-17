@@ -1,13 +1,14 @@
 package login_page
 
 import grails.validation.ValidationException
+import org.springframework.context.MessageSource
 
 import static org.springframework.http.HttpStatus.*
 
 class PersonController {
 
     PersonService personService
-
+    MessageSource messageSource
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -22,18 +23,26 @@ class PersonController {
     def create() {
         respond new Person(params)
     }
+    def validate(Person person){
+        personService.validate(person)
+        for (error in person.errors) {
 
+            // lookup the error message
+            Locale locale = RCU.getLocale(request)
+            String errorMsg = messageSource.getMessage(error)
+
+            println errorMsg
+        }
+    }
     def save(Person person) {
         if (person == null) {
             notFound()
-            return
         }
 
         try {
             personService.save(person)
         } catch (ValidationException e) {
             respond person.errors, view:'create'
-            return
         }
 
         request.withFormat {

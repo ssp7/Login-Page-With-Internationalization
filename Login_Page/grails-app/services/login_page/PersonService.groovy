@@ -1,14 +1,16 @@
 package login_page
 
 import grails.gorm.transactions.Transactional
-
+import org.springframework.validation.FieldError
+import org.springframework.context.MessageSource
+import org.springframework.web.servlet.support.RequestContextUtils as RCU
 @Transactional
 class PersonService {
-
+    MessageSource messageSource
     void save(Person person) {
        person.save()
     }
-    void delete(Person person){
+   void delete(Person person){
         person.delete()
     }
     List<Person> list(){
@@ -19,6 +21,12 @@ class PersonService {
        Person.deleteAll(listOfPerson)
     }
     void validate(Person person){
-        person.validate()
+          if(!person.validate()){
+              person.errors.allErrors
+          }
+          else{
+          person.validate()
+      }
     }
+
 }

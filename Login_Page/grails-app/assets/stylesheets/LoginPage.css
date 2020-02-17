@@ -1,18 +1,23 @@
 .header {
     padding:10px;
     text-align: left;
-    background: #006dba;
+    background: #3d5ba9;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
 }
 .footer {
     position: fixed;
     bottom: 0;
     height: 5%;
     width: 100%;
-    background-color: #006dba;
+    background-color: #3d5ba9;
     color: white;
     text-align: center;
     font-size: 35px;
-
+}
+.img{
+    width: 11px;
+    height: 80%;
+    position: relative;
+    float: left;
 }

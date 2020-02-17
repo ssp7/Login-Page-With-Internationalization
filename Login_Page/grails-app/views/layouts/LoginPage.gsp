@@ -13,9 +13,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <div class="header">
-        <h1>
-            Talent Plus Test
-        </h1>
+      <asset:image src="Talent-plus-logo-2018.png"/>
     </div>
 </head>
 
