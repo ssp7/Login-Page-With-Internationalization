@@ -29,9 +29,10 @@ class PersonServiceSpec extends Specification implements ServiceUnitTest<PersonS
         p.get(1).userName.equalsIgnoreCase("spy1")
 
         when: "we try to validate a person object it should through service"
-        Person person = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy2", password: "12345678")
+        Person person = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email2.com", userName: "spy2", password: "12345678")
         then:
         person.validate()
+
         expect: "we try to save a validated person it should save"
         service.save(person)
         Person.count == 3
@@ -45,10 +46,10 @@ class PersonServiceSpec extends Specification implements ServiceUnitTest<PersonS
         List<Person> listPerson = [Person.get(0),Person.get(1)]
         service.deleteByList(listPerson)
         then:
-        Person.count == 3
+        Person.count == 1
     }
 
-    void "Test for error message"(){
+    void "Test for error message"() {
         given: "We save person objects"
         Person person = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid", userName: "spy2", password: "1232234234")
         expect:

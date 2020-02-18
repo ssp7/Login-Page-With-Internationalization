@@ -26,7 +26,7 @@ class PersonSpec extends Specification implements DomainUnitTest<Person> {
     }
     void "Expecting no to validate as username was null"() {
         when:
-        p.lastName = 'spy899'
+        p.userName = ''
         then:
         !p.validate()
     }
