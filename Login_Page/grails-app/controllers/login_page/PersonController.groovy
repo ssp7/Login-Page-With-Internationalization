@@ -17,7 +17,7 @@ class PersonController {
     }
 
     def show(Long id) {
-        respond personService.get(id)
+        respond personService.get("spy")
     }
 
     def create() {

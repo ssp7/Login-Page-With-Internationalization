@@ -28,5 +28,8 @@ class PersonService {
           person.validate()
       }
     }
+    Person get(String username){
+        Person.findByUserName(username)
+    }
 
 }
