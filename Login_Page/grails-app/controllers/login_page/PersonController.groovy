@@ -106,7 +106,8 @@ class PersonController {
             '*'{ render status: NOT_FOUND }
         }
     }
-    def list(){
-        personService.listPersons()
-    }
+   def list(){
+
+       render(view: '/person/List',model :[list : personService.list()])
+   }
 }
