@@ -60,6 +60,9 @@ dependencies {
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:3.0.10"
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
     runtime "com.h2database:h2"
+
+    runtime 'mysql:mysql-connector-java'
+
     runtime "org.apache.tomcat:tomcat-jdbc"
     runtime "javax.xml.bind:jaxb-api:2.3.0"
     testCompile "org.grails:grails-gorm-testing-support"

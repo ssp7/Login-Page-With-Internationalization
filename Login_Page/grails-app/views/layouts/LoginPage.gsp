@@ -114,9 +114,21 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="username" class="col-md-3 control-label">Username</label>
+                        <div class="col-md-9">
+                            <input type="username" class="form-control" name="username" placeholder="username">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="password" class="col-md-3 control-label">Password</label>
                         <div class="col-md-9">
                             <input type="password" class="form-control" name="passwd" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="repassword" class="col-md-3 control-label">Re-Password</label>
+                        <div class="col-md-9">
+                            <input type="repassword" class="form-control" name="repasswd" placeholder="rePassword">
                         </div>
                     </div>
 
