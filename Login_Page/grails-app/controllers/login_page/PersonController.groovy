@@ -103,7 +103,17 @@ class PersonController {
         render(view: '/List', model: [list: personService.list()])
     }
 
-    def login(String username, String pass) {
-        personService.login(username, pass)
+    def login() {
+
+        Person person = personService.login(params.userName, params.password)
+        if (person == null) {
+            notFound()
+            return
+        }
+        if (person.hasErrors()) {
+            respond(person.errors, view: '/layout/LoginPage')
+            return
+        }
+        respond person
     }
 }
