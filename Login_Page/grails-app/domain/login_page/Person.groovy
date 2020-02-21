@@ -15,6 +15,6 @@ class Person {
         lastName blank: false
         emailAddress blank: false, email: true, unique: true
         userName blank: false, unique: true
-        password blank: false, minSize: 8, maxSize: 20
+        password blank: false, minSize: 8, maxSize: 20, password: true
     }
 }

@@ -24,8 +24,7 @@ class BootStrap {
            p = new Person(firstName: firstname,lastName: lastname,emailAddress: email,userName: username,password:password).save()
 
         }
-
-
+        Person legit = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678").save()
     }
     def destroy = {
     }

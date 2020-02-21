@@ -1,6 +1,6 @@
 package login_page
 
-import grails.validation.ValidationException
+
 import org.springframework.context.MessageSource
 
 import static org.springframework.http.HttpStatus.*
@@ -13,17 +13,20 @@ class PersonController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond personService.list(params), model:[personCount: personService.count()]
+        respond personService.list(), model: [personCount: personService.list()]
     }
 
-    def show(Long id) {
-        respond personService.get("spy")
+    def show(Person person) {
+
+        respond person
     }
 
     def create() {
+
         respond new Person(params)
     }
-    def validate(Person person){
+
+    def validate(Person person) {
         personService.validate(person)
         for (error in person.errors) {
 
@@ -36,15 +39,13 @@ class PersonController {
     }
     def save(Person person) {
         if (person == null) {
-            notFound()
+            render status: NOT_FOUND
         }
-
-        try {
-            personService.save(person)
-        } catch (ValidationException e) {
-            respond person.errors, view:'create'
+        if (person.hasErrors()) {
+            respond(person.errors, view: 'create')
+            return
         }
-
+        personService.save(person)
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
@@ -54,8 +55,8 @@ class PersonController {
         }
     }
 
-    def edit(Long id) {
-        respond personService.get(id)
+    def edit(Person person) {
+        respond person
     }
 
     def update(Person person) {
@@ -64,50 +65,45 @@ class PersonController {
             return
         }
 
-        try {
-            personService.save(person)
-        } catch (ValidationException e) {
-            respond person.errors, view:'edit'
+        if (person.hasErrors()) {
+            respond(person.errors, view: 'edit')
             return
         }
-
+        personService.save(person)
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
                 redirect person
             }
-            '*'{ respond person, [status: OK] }
+            '*' { respond person, [status: OK] }
         }
     }
 
-    def delete(Long id) {
-        if (id == null) {
+    def delete(Person person) {
+        if (person == null) {
             notFound()
             return
         }
 
-        personService.delete(id)
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'person.label', default: 'login_page.Person'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+        personService.delete(person)
+        render(view: '/layouts/LoginPage')
     }
 
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'person.label', default: 'login_page.Person'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
-   def list(){
 
-       render(view: '/person/List',model :[list : personService.list()])
-   }
+    def list() {
+        render(view: '/List', model: [list: personService.list()])
+    }
+
+    def login(String username, String pass) {
+        personService.login(username, pass)
+    }
 }
