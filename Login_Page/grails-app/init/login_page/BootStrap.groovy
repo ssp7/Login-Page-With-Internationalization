@@ -21,10 +21,10 @@ class BootStrap {
             username =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             password =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             email =   RandomStringUtils.random(randomStringLength, charset.toCharArray()) + domain.get(random.nextInt(domain.size()))
-           p = new Person(firstName: firstname,lastName: lastname,emailAddress: email,userName: username,password:password).save()
+           p = new Person(firstName: firstname, lastName: lastname, emailAddress: email, userName: username, password: password, confirmPassword: password).save()
 
         }
-        Person legit = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678").save()
+        Person legit = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678", confirmPassword: "12345678").save()
     }
     def destroy = {
     }

@@ -1,9 +1,9 @@
 package login_page
 
-
 import org.springframework.context.MessageSource
 
-import static org.springframework.http.HttpStatus.*
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.NOT_FOUND
 
 class PersonController {
 
@@ -17,8 +17,12 @@ class PersonController {
     }
 
     def show(Person person) {
-
-        respond person
+        person = personService.login(params.userName, params.password)
+        if (person == null) {
+            LoginPage()
+        } else {
+            respond person
+        }
     }
 
     def create() {
@@ -38,6 +42,7 @@ class PersonController {
         }
     }
     def save(Person person) {
+
         if (person == null) {
             render status: NOT_FOUND
         }
@@ -48,7 +53,7 @@ class PersonController {
         personService.save(person)
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
+                flash.message = message(code: 'default.created.message')
                 redirect person
             }
             '*' { respond person, [status: CREATED] }
@@ -72,10 +77,10 @@ class PersonController {
         personService.save(person)
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
-                redirect person
+                flash.message = message('Your account is editted successfully')
+
             }
-            '*' { respond person, [status: OK] }
+
         }
     }
 
@@ -86,16 +91,16 @@ class PersonController {
         }
 
         personService.delete(person)
-        render(view: '/layouts/LoginPage')
+        render(view: '/person/LoginPage')
     }
 
     protected void notFound() {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person'), params.id])
-                redirect action: "index", method: "GET"
+                //redirect action: "index", method: "GET"
             }
-            '*' { render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND, view: '/layouts/LoginPage' }
         }
     }
 
@@ -103,17 +108,13 @@ class PersonController {
         render(view: '/List', model: [list: personService.list()])
     }
 
-    def login() {
-
-        Person person = personService.login(params.userName, params.password)
-        if (person == null) {
-            notFound()
-            return
+    def LoginPage() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person'), params.id])
+                //redirect action: "index", method: "GET"
+            }
+            '*' { render status: NOT_FOUND, view: '/layouts/LoginPage' }
         }
-        if (person.hasErrors()) {
-            respond(person.errors, view: '/layout/LoginPage')
-            return
-        }
-        respond person
     }
 }
