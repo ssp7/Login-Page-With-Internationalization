@@ -10,6 +10,7 @@ class UrlMappings {
         }
 
         "/"(view: "/person/LoginPage")
+      // "/"(view: "/layouts/main")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }

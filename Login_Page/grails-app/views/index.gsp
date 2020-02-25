@@ -25,7 +25,7 @@
         </ul>
     </li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
+        <a href="index.gsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Artefacts <span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li class="dropdown-item"><a href="#">Controllers: ${grailsApplication.controllerClasses.size()}</a></li>
             <li class="dropdown-item"><a href="#">Domains: ${grailsApplication.domainClasses.size()}</a></li>
@@ -39,6 +39,13 @@
             <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
                 <li class="dropdown-item"><a href="#">${plugin.name} - ${plugin.version}</a></li>
             </g:each>
+        </ul>
+    </li>
+    <tag></tag>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><g:message code="language" default="Languages"/> <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <navBar:localeDropdownListItems uri="${request.forwardURI}"/>
         </ul>
     </li>
 </content>
