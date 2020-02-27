@@ -5,15 +5,22 @@
     color: white;
     font-size: 30px;
 }
-.footer {
+
+#footer {
+
     position: fixed;
-    bottom: 0;
-    height: 5%;
-    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    margin-bottom: 0px;
     background-color: #3d5ba9;
     color: white;
     text-align: center;
     font-size: 35px;
+}
+#footerText {
+line-height: 20px;
 }
 .img{
     width: 11px;
