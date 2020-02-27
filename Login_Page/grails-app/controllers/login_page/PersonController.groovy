@@ -104,6 +104,7 @@ class PersonController {
         }
     }
 
+
     def list() {
         render(view: '/List', model: [list: personService.list()])
     }
