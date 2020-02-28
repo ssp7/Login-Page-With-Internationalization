@@ -24,17 +24,15 @@
 </head>
 
 <body>
-<header>
-
 <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation">
     <asset:image src="Talent-plus-logo-2018.png"/>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
+    <div class="navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
         <ul class="nav navbar-nav ml-auto">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
+                <a href="/person/LoginPage" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="/?lang=hi_IN">Hindi</a></li>
                     <li><a href='/?lang=en'>English</a></li>
@@ -45,7 +43,6 @@
         </ul>
     </div>
 </nav>
-</header>
 
 <div class="container">
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -100,10 +97,10 @@
                         <div class="col-md-12 control">
                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
                                 <g:message code="prompt.donthaveanaccount"/>
-                                <a href="person/create" onClick="$('#loginbox').hide();
-                                $('').show()">
+                                <a href="/person/create">
                                     <g:message code="prompt.signup"/>
                                 </a>
+
                             </div>
                         </div>
                     </div>
@@ -111,7 +108,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <footer id="footer">
     <small id = "footerText"><g:message code="copyright.copyright"/></small>

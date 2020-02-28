@@ -3,6 +3,7 @@ package login_page
 import org.springframework.context.MessageSource
 
 import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.FOUND
 import static org.springframework.http.HttpStatus.NOT_FOUND
 
 class PersonController {
@@ -17,12 +18,7 @@ class PersonController {
     }
 
     def show(Person person) {
-        person = personService.login(params.userName, params.password)
-        if (person == null) {
-            LoginPage()
-        } else {
-            respond person
-        }
+        respond person
     }
 
     def create() {
@@ -41,6 +37,7 @@ class PersonController {
             println errorMsg
         }
     }
+
     def save(Person person) {
 
         if (person == null) {
@@ -77,10 +74,10 @@ class PersonController {
         personService.save(person)
         request.withFormat {
             form multipartForm {
-                flash.message = message('Your account is editted successfully')
-
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
+                redirect person
             }
-
+            '*' { respond person, [status: OK] }
         }
     }
 
@@ -110,12 +107,11 @@ class PersonController {
     }
 
     def LoginPage() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person'), params.id])
-                //redirect action: "index", method: "GET"
-            }
-            '*' { render status: NOT_FOUND, view: '/layouts/LoginPage' }
+
+        Person p = personService.login(params.userName, params.password)
+        if (p == null) {
+            notFound()
         }
+
     }
 }

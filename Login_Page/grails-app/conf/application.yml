@@ -109,7 +109,7 @@ dataSource:
     formatSql: true
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password: Spykid007@payload.com
+    password: aa
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 environments:

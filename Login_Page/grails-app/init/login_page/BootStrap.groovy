@@ -14,11 +14,11 @@ class BootStrap {
         String password
         Random random = new Random()
         Person p
-        def domain = ['@gmail.com','@email.com','@talentplus.com','@yahoo.com','@hotmail.com','@fastmail.com','@protonmail.ch','@america.com']
+         def domain = ['@gmail.com','@email.com','@talentplus.com','@yahoo.com','@hotmail.com','@fastmail.com','@protonmail.ch','@america.com']
         for(int i = 0; i <50;i++){
          firstname = RandomStringUtils.random(randomStringLength, charset.toCharArray())
          lastname =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
-            username =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
+             username =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             password =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             email =   RandomStringUtils.random(randomStringLength, charset.toCharArray()) + domain.get(random.nextInt(domain.size()))
            p = new Person(firstName: firstname, lastName: lastname, emailAddress: email, userName: username, password: password, confirmPassword: password).save()
