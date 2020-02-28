@@ -97,7 +97,7 @@ class PersonController {
                 flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person'), params.id])
                 //redirect action: "index", method: "GET"
             }
-            '*' { render status: NOT_FOUND, view: '/layouts/LoginPage' }
+            '*' { render status: NOT_FOUND, view: '/person/LoginPage' }
         }
     }
 
@@ -106,12 +106,13 @@ class PersonController {
         render(view: '/List', model: [list: personService.list()])
     }
 
-    def LoginPage() {
+    Person LoginPage() {
 
         Person p = personService.login(params.userName, params.password)
         if (p == null) {
             notFound()
+        }else {
+            redirect p
         }
-
     }
 }

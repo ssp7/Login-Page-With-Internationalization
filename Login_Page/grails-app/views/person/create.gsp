@@ -36,12 +36,12 @@
     <div class="navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
         <ul class="nav navbar-nav ml-auto">
             <li class="dropdown">
-                <a href="/person/create" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="/?lang=hi_IN">Hindi</a></li>
-                    <li><a href='/?lang=en'>English</a></li>
-                    <li><a href='/?lang=es'>Spanish</a></li>
-                    <li><a href='/?lang=it'>Italian</a></li>
+                    <li><a href="/person/create?lang=hi_IN">Hindi</a></li>
+                    <li><a href='/person/create?lang=en'>English</a></li>
+                    <li><a href='/person/create?lang=es'>Spanish</a></li>
+                    <li><a href='/person/create?lang=it'>Italian</a></li>
                 </ul>
             </li>
         </ul>
@@ -66,7 +66,7 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title"><g:message code="prompt.signuponly"/></div>
-                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/person/LoginPage.gsp"><g:message code="prompt.signin"/></a></div>
+                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/person/LoginPage"><g:message code="prompt.signin"/></a></div>
             </div>
             <div class="panel-body" >
                 <form id="signupform" class="form-horizontal" role="form" action="/person/save" method="post">

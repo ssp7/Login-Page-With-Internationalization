@@ -45,7 +45,18 @@
 </nav>
 
 <div class="container">
-    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <g:if test="${flash.message}">
+            <div class="message" role="status">${flash.message}</div>
+        </g:if>
+        <g:hasErrors bean="${this.person}">
+            <ul class="alert alert-danger" role="alert">
+                <g:eachError bean="${this.person}" var="error">
+                    <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                </g:eachError>
+            </ul>
+        </g:hasErrors>
+    </div>    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title"><g:message code="prompt.signin"/></div>
@@ -58,7 +69,7 @@
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-                <form id="login" class="form-horizontal" role="form" action="/person/show" method="post">
+                <form id="login" class="form-horizontal" role="form" action="/person/LoginPage" method="post">
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -87,7 +98,7 @@
                         <!-- Button -->
 
                         <div class="col-sm-12 controls">
-                            <input type="submit" name="show" class="btn btn-success"
+                            <input type="submit"  class="btn btn-success"
                                    value="<g:message code="prompt.login"/>" id=""/>
                         </div>
                     </div>
