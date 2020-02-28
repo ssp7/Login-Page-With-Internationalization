@@ -94,7 +94,7 @@ class PersonController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person')])
                 //redirect action: "index", method: "GET"
             }
             '*' { render status: NOT_FOUND, view: '/person/LoginPage' }
