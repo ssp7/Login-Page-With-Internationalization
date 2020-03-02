@@ -32,7 +32,7 @@
     <div class="navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
         <ul class="nav navbar-nav ml-auto">
             <li class="dropdown">
-                <a href="/person/LoginPage" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
+                <a href="/person/LoginPage" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages</a>
                 <ul class="dropdown-menu">
                     <li><a href="/?lang=hi_IN">Hindi</a></li>
                     <li><a href='/?lang=en'>English</a></li>
@@ -47,10 +47,10 @@
 <div class="container">
     <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+            <div class="alert alert-danger" role="status">${flash.message}</div>
         </g:if>
         <g:hasErrors bean="${this.person}">
-            <ul class="alert alert-danger" role="alert">
+            <ul class="alert alert-danger" role="alert" style="list-style-type: none">
                 <g:eachError bean="${this.person}" var="error">
                     <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                 </g:eachError>

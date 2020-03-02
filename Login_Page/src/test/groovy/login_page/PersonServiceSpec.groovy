@@ -1,3 +1,5 @@
+package login_page
+
 import grails.testing.gorm.DataTest
 import grails.testing.services.ServiceUnitTest
 import login_page.Person

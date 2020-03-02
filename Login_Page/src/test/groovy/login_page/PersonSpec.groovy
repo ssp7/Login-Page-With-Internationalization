@@ -1,4 +1,4 @@
-
+package login_page
 
 import grails.testing.gorm.DomainUnitTest
 import login_page.Person

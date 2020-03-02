@@ -36,7 +36,7 @@
     <div class="navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
         <ul class="nav navbar-nav ml-auto">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages</a>
                 <ul class="dropdown-menu">
                     <li><a href="/person/create?lang=hi_IN">Hindi</a></li>
                     <li><a href='/person/create?lang=en'>English</a></li>
@@ -54,7 +54,7 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${this.person}">
-                <ul class="alert alert-danger" role="alert">
+                <ul class="alert alert-danger" role="alert" style="list-style-type: none">
                     <g:eachError bean="${this.person}" var="error">
                         <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                     </g:eachError>
