@@ -2,222 +2,112 @@ package login_page
 
 import grails.testing.gorm.DomainUnitTest
 import grails.testing.web.controllers.ControllerUnitTest
-import grails.validation.ValidationException
 import spock.lang.Specification
+import spock.lang.Unroll
+
 
 class PersonControllerSpec extends Specification implements ControllerUnitTest<PersonController>, DomainUnitTest<Person> {
 
-    def populateValidParams(params) {
-        assert params != null
-
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
-    }
-
-    void "Test the index action returns the correct model"() {
+    def 'Test the index action returns the correct model'() {
         given:
-        controller.personService = Mock(PersonService) {
-            1 * list(_) >> []
-            1 * count() >> 0
+        List<Person> samplePerson = [new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678"),
+                                     new Person(firstName: "HD", lastName: "Zahur", emailAddress: "valid2@email.com", userName: "spy1", password: "12345678")
+        ]
+        controller.personService = Stub(PersonService) {
+            list() >> samplePerson
+            count() >> samplePerson.size()
         }
 
-        when: "The index action is executed"
+        when: 'The index action is executed'
         controller.index()
 
-        then: "The model is correct"
-        !model.personList
-        model.personCount == 0
+        then: 'The model is correct'
+        model.personList
+        model.personList.size() == samplePerson.size()
+        model.personList.find { it.firstName == "Soham" && it.emailAddress == 'valid@email.com' }
+        model.personList.find { it.lastName == 'Zahur' && it.firstName == 'HD' }
+        !model.personList.find { it.userName == 'spykid001' }
+        model.personCount.size() == samplePerson.size()
     }
 
-    void "Test the create action returns the correct model"() {
-        when: "The create action is executed"
-        controller.create()
-
-        then: "The model is correctly created"
-        model.person != null
-    }
-
-    void "Test the save action with a null instance"() {
-        when: "Save is called for a domain instance that doesn't exist"
-        request.contentType = FORM_CONTENT_TYPE
+    def 'If you dont provide proper parameters to the create page then you will remain on the create page'() {
+        when:
+        request.contentType == FORM_CONTENT_TYPE
         request.method = 'POST'
-        controller.save(null)
-
-        then: "A 404 error is returned"
-        response.redirectedUrl == '/person/index'
-        flash.message != null
-    }
-
-    void "Test the save action correctly persists"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * save(_ as Person)
-        }
-
-        when: "The save action is executed with a valid instance"
-        response.reset()
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'POST'
-        populateValidParams(params)
-        def person = new Person(params)
-        person.id = 1
-
-        controller.save(person)
-
-        then: "A redirect is issued to the show action"
-        response.redirectedUrl == '/person/show/1'
-        controller.flash.message != null
-    }
-
-    void "Test the save action with an invalid instance"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * save(_ as Person) >> { Person person ->
-                throw new ValidationException("Invalid instance", person.errors)
-            }
-        }
-
-        when: "The save action is executed with an invalid instance"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'POST'
-        def person = new Person()
-        controller.save(person)
-
-        then: "The create view is rendered again with the correct model"
-        model.person != null
+        controller.save()
+        then:
+        model.person
         view == 'create'
     }
-
-    void "Test the show action with a null id"() {
+    def 'If you provide proper parameters to the create page then it will take you to show page'() {
         given:
-        controller.personService = Mock(PersonService) {
-            1 * get(null) >> null
+        String firstName = "soham"
+        String lastName = "Patel"
+        String userName = "sp1301"
+        String email = "email@valid.com"
+        String password = "12341234"
+        String confirmPassword = "12341234"
+        controller.personService = Stub(PersonService){
+            save() >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
+          //  read(_) >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
         }
-
-        when: "The show action is executed with a null domain"
-        controller.show(null)
-
-        then: "A 404 error is returned"
-        response.status == 404
-    }
-
-    void "Test the show action with a valid id"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * get(2) >> new Person()
-        }
-
-        when: "A domain instance is passed to the show action"
-        controller.show(2)
-
-        then: "A model is populated containing the domain instance"
-        model.person instanceof Person
-    }
-
-    void "Test the edit action with a null id"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * get(null) >> null
-        }
-
-        when: "The show action is executed with a null domain"
-        controller.edit(null)
-
-        then: "A 404 error is returned"
-        response.status == 404
-    }
-
-    void "Test the edit action with a valid id"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * get(2) >> new Person()
-        }
-
-        when: "A domain instance is passed to the show action"
-        controller.edit(2)
-
-        then: "A model is populated containing the domain instance"
-        model.person instanceof Person
-    }
-
-
-    void "Test the update action with a null instance"() {
-        when: "Save is called for a domain instance that doesn't exist"
+        when:
+        request.method = "POST"
         request.contentType = FORM_CONTENT_TYPE
-        request.method = 'PUT'
-        controller.update(null)
-
-        then: "A 404 error is returned"
-        response.redirectedUrl == '/person/index'
-        flash.message != null
+        params['firstName'] = firstName
+        params['lastName'] = lastName
+        params['userName'] = userName
+        params['emailAddress'] = email
+        params['password'] = password
+        params['confirmPassword'] = confirmPassword
+        controller.save()
+        then:
+        flash.message
+        and:
+        response.redirectedUrl.startsWith("/person/show")
+        and:
+        response.status == 302
     }
-
-    void "Test the update action correctly persists"() {
+    def 'JSON payload is doomed to the service object. If the person is saved then a 201 is returned'(){
         given:
-        controller.personService = Mock(PersonService) {
-            1 * save(_ as Person)
+        String firstName = "soham"
+        String lastName = "Patel"
+        String userName = "sp1301"
+        String email = "email@valid.com"
+        String password = "12341234"
+        String confirmPassword = "12341234"
+        controller.personService = Stub(PersonService){
+            save() >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
+            //  read(_) >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
         }
-
-        when: "The save action is executed with a valid instance"
-        response.reset()
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'PUT'
-        populateValidParams(params)
-        def person = new Person(params)
-        person.id = 1
-
-        controller.update(person)
-
-        then: "A redirect is issued to the show action"
-        response.redirectedUrl == '/person/show/1'
-        controller.flash.message != null
+        when:
+        request.method = 'POST'
+        request.json = '{"firstName":"'+firstName + '","lastName":'+lastName + '","userName":'+userName + '","emailAddress":'+email+'","password":'+password + '","lastName":'+lastName + '","confirmPassoword":'+confirmPassword +'}'
+        controller.save()
+        then:
+        response.status == 200
     }
 
-    void "Test the update action with an invalid instance"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * save(_ as Person) >> { Person person ->
-                throw new ValidationException("Invalid instance", person.errors)
-            }
-        }
+    def "PersonController.save does not accept #method requests"(String method) {
+        when:
+        request.method = method
+        controller.save()
 
-        when: "The save action is executed with an invalid instance"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'PUT'
-        controller.update(new Person())
+        then:
+        response.status ==405
 
-        then: "The edit view is rendered again with the correct model"
-        model.person != null
-        view == 'edit'
+        where:
+        method << ['PATCH', 'DELETE', 'GET', 'PUT']
+    }
+    def "PersonController.save accepts POST requests"() {
+        when:
+        request.method = 'POST'
+        controller.save()
+
+        then:
+        response.status == 200
     }
 
-    void "Test the delete action with a null instance"() {
-        when: "The delete action is called for a null instance"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'DELETE'
-        controller.delete(null)
-
-        then: "A 404 is returned"
-        response.redirectedUrl == '/person/index'
-        flash.message != null
-    }
-
-    void "Test the delete action with an instance"() {
-        given:
-        controller.personService = Mock(PersonService) {
-            1 * delete(2)
-        }
-
-        when: "The domain instance is passed to the delete action"
-        request.contentType = FORM_CONTENT_TYPE
-        request.method = 'DELETE'
-        controller.delete(2)
-
-        then: "The user is redirected to index"
-        response.redirectedUrl == '/person/index'
-        flash.message != null
-    }
 }
 
 

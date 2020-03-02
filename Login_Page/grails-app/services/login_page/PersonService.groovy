@@ -46,5 +46,7 @@ class PersonService {
     Person login(String username, String password) {
         Person.findByUserNameAndPassword(username, password)
     }
-
+    def count(){
+        Person.count
+    }
 }

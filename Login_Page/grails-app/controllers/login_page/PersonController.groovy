@@ -17,8 +17,8 @@ class PersonController {
         respond personService.list(), model: [personCount: personService.list()]
     }
 
-    def show(Person person) {
-        respond person
+    def show(Long id) {
+        respond personService.get(Person.findById(id))
     }
 
     def create() {
@@ -51,7 +51,7 @@ class PersonController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message')
-                redirect person
+                redirect(action: 'show', id: person.id)
             }
             '*' { respond person, [status: CREATED] }
         }
@@ -103,10 +103,11 @@ class PersonController {
 
 
     def list() {
-        render(view: '/List', model: [list: personService.list()])
+        List<Person> list = personService.list()
+        render(view: '/List', model: [list: list])
     }
 
-    Person LoginPage() {
+    def LoginPage() {
 
         Person p = personService.login(params.userName, params.password)
         if (p == null) {
