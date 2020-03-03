@@ -7,7 +7,7 @@ import spock.lang.Specification
 class PersonSpec extends Specification implements DomainUnitTest<Person> {
 
 
-    Person p = new Person(firstName: "Soham",lastName: "Patel",emailAddress: "valid@email.com",userName: "spy",password: "12345678")
+    Person p = new Person(firstName: "Soham",lastName: "Patel",emailAddress: "valid@email.com",userName: "spy",password: "12345678",confirmPassword: "12345678")
     void "Expecting to validate as all the conditions for the attributes are verified"() {
         expect:
         p.validate()
@@ -26,7 +26,7 @@ class PersonSpec extends Specification implements DomainUnitTest<Person> {
     }
     void "Expecting no to validate as username was null"() {
         when:
-        p.lastName = 'spy899'
+        p.userName = ''
         then:
         !p.validate()
     }

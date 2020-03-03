@@ -19,15 +19,15 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         }
 
         when: 'The index action is executed'
-        controller.index()
+        controller.list()
 
         then: 'The model is correct'
-        model.personList
-        model.personList.size() == samplePerson.size()
-        model.personList.find { it.firstName == "Soham" && it.emailAddress == 'valid@email.com' }
-        model.personList.find { it.lastName == 'Zahur' && it.firstName == 'HD' }
-        !model.personList.find { it.userName == 'spykid001' }
-        model.personCount.size() == samplePerson.size()
+        model.list
+        model.list.size() == samplePerson.size()
+        model.list.find { it.firstName == "Soham" && it.emailAddress == 'valid@email.com' }
+        model.list.find { it.lastName == 'Zahur' && it.firstName == 'HD' }
+        !model.list.find { it.userName == 'spykid001' }
+        model.list.size() == samplePerson.size()
     }
 
     def 'If you dont provide proper parameters to the create page then you will remain on the create page'() {
@@ -39,6 +39,7 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         model.person
         view == 'create'
     }
+
     def 'If you provide proper parameters to the create page then it will take you to show page'() {
         given:
         String firstName = "soham"
@@ -47,9 +48,9 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         String email = "email@valid.com"
         String password = "12341234"
         String confirmPassword = "12341234"
-        controller.personService = Stub(PersonService){
-            save() >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
-          //  read(_) >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
+        controller.personService = Stub(PersonService) {
+            save() >> new Person(firstName: firstName, lastName: lastName, userName: userName, emailAddress: email, password: password, confirmPassword: confirmPassword)
+            //  read(_) >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
         }
         when:
         request.method = "POST"
@@ -68,7 +69,8 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         and:
         response.status == 302
     }
-    def 'JSON payload is doomed to the service object. If the person is saved then a 201 is returned'(){
+
+    def 'JSON payload is doomed to the service object. If the person is saved then a 201 is returned'() {
         given:
         String firstName = "soham"
         String lastName = "Patel"
@@ -76,13 +78,13 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         String email = "email@valid.com"
         String password = "12341234"
         String confirmPassword = "12341234"
-        controller.personService = Stub(PersonService){
-            save() >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
+        controller.personService = Stub(PersonService) {
+            save() >> new Person(firstName: firstName, lastName: lastName, userName: userName, emailAddress: email, password: password, confirmPassword: confirmPassword)
             //  read(_) >> new Person(firstName: firstName,lastName: lastName,userName: userName,emailAddress: email,password: password,confirmPassword: confirmPassword)
         }
         when:
         request.method = 'POST'
-        request.json = '{"firstName":"'+firstName + '","lastName":'+lastName + '","userName":'+userName + '","emailAddress":'+email+'","password":'+password + '","lastName":'+lastName + '","confirmPassoword":'+confirmPassword +'}'
+        request.json = '{"firstName":"' + firstName + '","lastName":' + lastName + '","userName":' + userName + '","emailAddress":' + email + '","password":' + password + '","lastName":' + lastName + '","confirmPassoword":' + confirmPassword + '}'
         controller.save()
         then:
         response.status == 200
@@ -94,11 +96,12 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         controller.save()
 
         then:
-        response.status ==405
+        response.status == 405
 
         where:
         method << ['PATCH', 'DELETE', 'GET', 'PUT']
     }
+
     def "PersonController.save accepts POST requests"() {
         when:
         request.method = 'POST'
@@ -108,10 +111,22 @@ class PersonControllerSpec extends Specification implements ControllerUnitTest<P
         response.status == 200
     }
 
+    def "when we edit a person and dont provide proper parameters then we stay on edit page only"() {
+        when:
+        request.contentType == FORM_CONTENT_TYPE
+        request.method = 'POST'
+        controller.edit()
+        then:
+        model.person
+        view == 'edit'
+    }
+
+    def "when we delete a person it will go to the LoginPage page"() {
+        when:
+        request.contentType == FORM_CONTENT_TYPE
+        request.method = 'DELETE'
+        controller.delete()
+        then:
+        view == '/person/LoginPage'
+    }
 }
-
-
-
-
-
-

@@ -12,11 +12,6 @@ class PersonController {
     MessageSource messageSource
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond personService.list(), model: [personCount: personService.list()]
-    }
-
     def show(Long id) {
         respond personService.get(Person.findById(id))
     }
@@ -57,8 +52,8 @@ class PersonController {
         }
     }
 
-    def edit(Person person) {
-        respond person
+    def edit(Person p) {
+        respond p
     }
 
     def update(Person person) {
@@ -75,7 +70,7 @@ class PersonController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
-                redirect person
+                redirectredirect(action: 'show', id: person.id)
             }
             '*' { respond person, [status: OK] }
         }
@@ -113,7 +108,7 @@ class PersonController {
         if (p == null) {
             notFound()
         }else {
-            redirect p
+            redirect (action: 'show',id: p.id)
         }
     }
 }
