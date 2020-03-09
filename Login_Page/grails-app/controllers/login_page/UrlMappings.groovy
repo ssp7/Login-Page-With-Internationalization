@@ -8,7 +8,7 @@ class UrlMappings {
                 // apply constraints here
             }
         }
-
+        "/login/auth" controller: 'PersonController',action: 'LoginPage'
         "/"(view: "/person/LoginPage")
       // "/"(view: "/layouts/main")
         "500"(view:'/person/error')
