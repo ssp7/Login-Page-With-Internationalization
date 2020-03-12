@@ -1,16 +1,17 @@
 package login_page
 
+import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.context.MessageSource
 
 import static org.springframework.http.HttpStatus.CREATED
-import static org.springframework.http.HttpStatus.FOUND
 import static org.springframework.http.HttpStatus.NOT_FOUND
-
+@Secured('permitAll')
 class PersonController {
 
     PersonService personService
     MessageSource messageSource
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
 
     def show(Long id) {
         respond personService.get(Person.findById(id))
@@ -95,7 +96,6 @@ class PersonController {
             '*' { render status: NOT_FOUND, view: '/person/LoginPage' }
         }
     }
-
 
     def list() {
         List<Person> list = personService.list()

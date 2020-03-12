@@ -51,7 +51,7 @@
 <div class="container">
     <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <g:if test="${flash.message}">
-                <div class="alert alert-success" role="status">${flash.message}</div>
+                <div class="alert alert-error" role="status">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${this.person}">
                 <ul class="alert alert-success" role="alert" style="list-style-type: none">

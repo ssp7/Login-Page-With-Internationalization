@@ -62,7 +62,7 @@
             <div class="panel-heading">
                 <div class="panel-title"><g:message code="prompt.signin"/></div>
 
-              <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                <div style="float:right; font-size: 80%; position: relative; top:-10px">
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-                <form id="login" class="form-horizontal" role="form" action="/person/show" method="post">
+                <form id="login" class="form-horizontal" role="form" action="/person/LoginPage" method="post">
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -109,7 +109,7 @@
                         <div class="col-md-12 control">
                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
                                 <g:message code="prompt.donthaveanaccount"/>
-                                <a href="/person/create">
+                                <a href="../person/create">
                                     <g:message code="prompt.signup"/>
                                 </a>
 

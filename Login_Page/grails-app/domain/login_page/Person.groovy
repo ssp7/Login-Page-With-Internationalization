@@ -1,9 +1,10 @@
 package login_page
 
-
+import grails.compiler.GrailsCompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
+@GrailsCompileStatic
 @EqualsAndHashCode(includes='userName')
 @ToString(includes='userName', includeNames=true, includePackage=false)
 class Person {
@@ -12,7 +13,7 @@ class Person {
     String emailAddress
     String userName
     String password
-    transient confirmPassword
+    String confirmPassword
 
     String toString(){
         firstName + " " + lastName + " " + emailAddress + " "+ userName +  " " + password

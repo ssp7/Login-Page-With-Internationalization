@@ -5,6 +5,10 @@ import org.apache.commons.lang.RandomStringUtils
 class BootStrap {
 
     def init = { servletContext ->
+        def adminRole = Authority.findOrSaveWhere(authority: 'ROLE_ADMIN')
+        def userRole = Authority.findOrSaveWhere(authority: 'ROLE_USER')
+        def superRole = Authority.findOrSaveWhere(authority: 'ROLE_SUPERADMIN')
+
         int randomStringLength = 10
         String charset = (('a'..'z') + ('A'..'Z') + ('0'..'9')).join()
         String firstname
@@ -12,7 +16,7 @@ class BootStrap {
         String username
         String email
         String password
-
+        String confirmPassword
         Random random = new Random()
         Person p
          def domain = ['@gmail.com','@email.com','@talentplus.com','@yahoo.com','@hotmail.com','@fastmail.com','@protonmail.ch','@america.com']
@@ -22,11 +26,15 @@ class BootStrap {
              username =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             password =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             email =   RandomStringUtils.random(randomStringLength, charset.toCharArray()) + domain.get(random.nextInt(domain.size()))
-
-           p = new Person(firstName: firstname, lastName: lastname, emailAddress: email, userName: username, password: password, confirmPassword: password).save()
+            confirmPassword = password
+           p =  new Person(firstName: firstname, lastName: lastname, emailAddress: email, userName: username, password: password, confirmPassword: confirmPassword).save()
+           PersonAuthority.create(p,userRole)
 
         }
-        Person legit = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678", confirmPassword: "12345678").save()
+        Person user = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spy", password: "12345678", confirmPassword: "12345678").save()
+        Person admin = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email2.com", userName: "spy1", password: "12345678", confirmPassword: "12345678").save()
+                PersonAuthority.create(user,userRole)
+        PersonAuthority.create(admin,adminRole)
     }
     def destroy = {
     }
