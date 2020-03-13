@@ -43,8 +43,8 @@ class PersonService {
         person
     }
 
-    Person login(String username, String password) {
-        Person.findByUserNameAndPassword(username, password)
+    def login(String username, String confirmPassword) {
+        Person.findByUserNameAndConfirmPassword(username, confirmPassword)
     }
     def count(){
         Person.count

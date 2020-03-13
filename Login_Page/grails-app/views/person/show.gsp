@@ -46,6 +46,11 @@
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>
             </g:form>
+            <sec:ifLoggedIn>
+                <sec:ifAllGranted roles="ROLE_ADMIN">
+                    <button class="button button5" type="submit" ><a href="/person/List.gsp"></a></button>
+                </sec:ifAllGranted>
+            </sec:ifLoggedIn>
         </div>
     <footer id="footer">
         <small id = "footerText"><g:message code="copyright.copyright"/></small>

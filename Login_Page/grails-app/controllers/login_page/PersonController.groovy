@@ -5,7 +5,9 @@ import org.springframework.context.MessageSource
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
-@Secured('permitAll')
+
+
+@Secured(['permitAll'])
 class PersonController {
 
     PersonService personService
@@ -99,12 +101,12 @@ class PersonController {
 
     def list() {
         List<Person> list = personService.list()
-        render(view: '/List', model: [list: list])
+        render(view: '/person/List', model: [list: list])
     }
 
     def LoginPage() {
 
-        Person p = personService.login(params.userName, params.password)
+       Person p = personService.login(params.userName, params.password)
         if (p == null) {
             notFound()
         }else {

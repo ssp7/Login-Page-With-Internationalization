@@ -1,13 +1,13 @@
 package login_page
 
-import grails.compiler.GrailsCompileStatic
+
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-@GrailsCompileStatic
+
 @EqualsAndHashCode(includes='userName')
 @ToString(includes='userName', includeNames=true, includePackage=false)
-class Person {
+class Person implements Serializable {
     String firstName
     String lastName
     String emailAddress
@@ -26,9 +26,9 @@ class Person {
         lastName blank: false
         emailAddress blank: false, email: true, unique: true
         userName blank: false, unique: true
-        password blank: false, minSize: 8, maxSize: 20, password: true
-        confirmPassword nullable: false, blank: false, password: true, validator: { val, object ->
-            if ((val != object.password)) {
+        password blank: false, password: true
+        confirmPassword nullable: false, blank: false, password: true, validator: { val, obj ->
+            if ((val != obj.password)) {
                 return 'validation.confirmpass'
             }
             return true
