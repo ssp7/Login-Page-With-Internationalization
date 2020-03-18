@@ -5,14 +5,14 @@ import org.springframework.context.MessageSource
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpMethod.PUT
 
 
-@Secured(['permitAll'])
 class PersonController {
 
     PersonService personService
     MessageSource messageSource
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT",listupdate:"PUT", delete: "DELETE"]
 
 
     def show(Long id) {
@@ -73,9 +73,10 @@ class PersonController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'login_page.Person'), person.id])
-                redirectredirect(action: 'show', id: person.id)
+                redirect(action: 'show', id: person.id)
+                //redirect(controller: 'admin', action: 'list')
             }
-            '*' { respond person, [status: OK] }
+         //   '*' { respond person, [status: OK] }
         }
     }
 
@@ -84,33 +85,36 @@ class PersonController {
             notFound()
             return
         }
-
         personService.delete(person)
-        render(view: '/person/LoginPage')
+        redirect( action:'LoginPage')
     }
 
     protected void notFound() {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person')])
-                //redirect action: "index", method: "GET"
+
             }
             '*' { render status: NOT_FOUND, view: '/person/LoginPage' }
         }
     }
 
-    def list() {
-        List<Person> list = personService.list()
-        render(view: '/person/List', model: [list: list])
-    }
-
+    @Secured(['permitAll'])
     def LoginPage() {
 
        Person p = personService.login(params.userName, params.password)
         if (p == null) {
             notFound()
         }else {
-            redirect (action: 'show',id: p.id)
+            if(p.getAuthorities()[0].getAuthority()=="ROLE_SUPERADMIN"){
+                redirect(controller:'superAdmin', action: 'superAdminShow', id: p.id)
+            }
+           else if(p.getAuthorities()[0].getAuthority()=="ROLE_ADMIN"){
+                redirect(controller:'admin', action: 'adminShow', id: p.id)
+            }
+            else if(p.getAuthorities()[0].getAuthority()=="ROLE_USER"){
+                redirect(action: 'show', id: p.id)
+            }
         }
     }
 }

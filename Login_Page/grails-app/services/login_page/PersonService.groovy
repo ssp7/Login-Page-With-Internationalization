@@ -12,6 +12,7 @@ class PersonService {
     }
 
     void delete(Person person) {
+        PersonAuthority.remove(person,person.getAuthorities()[0])
         person.delete()
     }
 
@@ -49,4 +50,6 @@ class PersonService {
     def count(){
         Person.count
     }
+
+
 }

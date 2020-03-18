@@ -51,6 +51,7 @@ class PersonAuthority implements Serializable {
 
 	static PersonAuthority create(Person person, Authority authority) {
 		def instance = new PersonAuthority(person: person, authority: authority)
+		instance.save()
 		instance
 	}
 

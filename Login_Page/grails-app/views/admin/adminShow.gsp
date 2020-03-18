@@ -1,9 +1,10 @@
+<%@ page import="org.springframework.validation.FieldError" %>
 <!DOCTYPE html>
 <html>
     <head>
         <asset:stylesheet src="application.css"/>
-        <g:set var="entityName" value="${message(code: 'person.label', default: 'Person')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <g:set var="entityName" value="${message(code: 'person.label', default: 'All User')}" />
+        <title>Admin</title>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation">
@@ -16,24 +17,30 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/person/show?lang=hi_IN">Hindi</a></li>
-                        <li><a href='/person/show?lang=en'>English</a></li>
-                        <li><a href='/person/show?lang=es'>Spanish</a></li>
-                        <li><a href='/person/show?lang=it'>Italian</a></li>
+                        <li><a href="/admin/adminShow?lang=hi_IN">Hindi</a></li>
+                        <li><a href='/admin/adminShow?lang=en'>English</a></li>
+                        <li><a href='/admin/adminShow?lang=es'>Spanish</a></li>
+                        <li><a href='/admin/adminShow?lang=it'>Italian</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </nav>
+
         <div id="show-person" class="content scaffold-show" role="main">
             <div style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="nav" role="navigation">
+                    <ul>
+                        <li><g:link class="list" controller="admin"  action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+                    </ul>
+                </div>
                 <g:if test="${flash.message}">
                     <div class="alert alert-success" role="status">${flash.message}</div>
                 </g:if>
                 <g:hasErrors bean="${this.person}">
                     <ul class="alert alert-danger" role="alert" style="list-style-type: none">
                         <g:eachError bean="${this.person}" var="error">
-                            <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                            <li <g:if test="${error in FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
                         </g:eachError>
                     </ul>
                 </g:hasErrors>

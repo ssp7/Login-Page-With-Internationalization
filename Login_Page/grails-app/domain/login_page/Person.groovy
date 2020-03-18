@@ -34,4 +34,7 @@ class Person implements Serializable {
             return true
         }
     }
+    static mapping = {
+        password column: '`password`'
+    }
 }

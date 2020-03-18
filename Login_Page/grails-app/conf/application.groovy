@@ -4,6 +4,7 @@
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'login_page.Person'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'login_page.PersonAuthority'
 grails.plugin.springsecurity.authority.className = 'login_page.Authority'
+grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/',               access: ['permitAll']],
 		[pattern: '/error',          access: ['permitAll']],

@@ -6,6 +6,7 @@ class UrlMappings {
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
                 // apply constraints here
+
             }
         }
 
