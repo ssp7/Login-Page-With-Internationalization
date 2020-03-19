@@ -66,7 +66,7 @@
         <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="panel-title"><g:message code="prompt.signuponly"/></div>
-                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/person/LoginPage"><g:message code="prompt.signin"/></a></div>
+                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/login/index"><g:message code="prompt.signin"/></a></div>
             </div>
             <div class="panel-body" >
                 <form id="signupform" class="form-horizontal" role="form" action="/person/save" method="post">

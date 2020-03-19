@@ -6,7 +6,7 @@ import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
-@Secured(['permitAll'])
+@Secured(['ROLE_SUPERADMIN'])
 class SuperAdminController {
 
 

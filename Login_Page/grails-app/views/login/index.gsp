@@ -32,12 +32,12 @@
     <div class="navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
         <ul class="nav navbar-nav ml-auto">
             <li class="dropdown">
-                <a href="/person/LoginPage" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages</a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages</a>
                 <ul class="dropdown-menu">
-                    <li><a href="/?lang=hi_IN">Hindi</a></li>
-                    <li><a href='/?lang=en'>English</a></li>
-                    <li><a href='/?lang=es'>Spanish</a></li>
-                    <li><a href='/?lang=it'>Italian</a></li>
+                    <li><a href="/login/auth/?lang=hi_IN">Hindi</a></li>
+                    <li><a href='/login/auth/?lang=en'>English</a></li>
+                    <li><a href='/login/auth/?lang=es'>Spanish</a></li>
+                    <li><a href='/login/auth/?lang=it'>Italian</a></li>
                 </ul>
             </li>
         </ul>
@@ -70,18 +70,18 @@
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-                <form id="login" class="form-horizontal" role="form" action="/person/LoginPage" method="post">
+                <form id="login" class="form-horizontal" role="form" action="/login/authenticate" method="post">
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         <input id="userName" type="text" class="form-control" name="userName"
-                               placeholder="<g:message code="prompt.signin"/>">
+                               placeholder="<g:message code="prompt.signin"/>" value="${params.userName}">
                     </div>
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         <input id="password" type="password" class="form-control" name="password"
-                               placeholder="<g:message code="prompt.password"/>">
+                               placeholder="<g:message code="prompt.password"/>" value="${params.password}">
                     </div>
 
 

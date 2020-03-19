@@ -82,23 +82,26 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:3.14.0"
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.14.0"
 }
-
+springBoot{
+    mainClassName ='login_page.Application'
+}
 bootRun {
     jvmArgs(
         '-Dspring.output.ansi.enabled=always', 
         '-noverify', 
         '-XX:TieredStopAtLevel=1',
         '-Xmx1024m')
+
     sourceResources sourceSets.main
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }
 
-
 assets {
     minifyJs = true
     minifyCss = true
 }
+
 
 tasks.withType(Test) {
     systemProperty "geb.env", System.getProperty('geb.env')

@@ -1,29 +1,37 @@
 package login_page
 
 import grails.plugin.springsecurity.annotation.Secured
+import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
+import org.springframework.security.core.context.SecurityContextHolder
+
+import java.util.logging.Logger
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
-import static org.springframework.http.HttpMethod.PUT
-
 
 class PersonController {
 
+    Person currentPerson
     PersonService personService
     MessageSource messageSource
     static allowedMethods = [save: "POST", update: "PUT",listupdate:"PUT", delete: "DELETE"]
 
+    private Person refreshCurrentUser() {
+        currentPerson = Person.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName())
+    }
 
     def show(Long id) {
         respond personService.get(Person.findById(id))
     }
 
+    @Secured(['permitAll'])
     def create() {
 
         respond new Person(params)
     }
 
+    @Secured(['permitAll'])
     def validate(Person person) {
         personService.validate(person)
         for (error in person.errors) {
@@ -36,6 +44,8 @@ class PersonController {
         }
     }
 
+
+    @Secured(['permitAll'])
     def save(Person person) {
 
         if (person == null) {
@@ -95,25 +105,24 @@ class PersonController {
                 flash.message = message(code: 'default.not.found.message', args: [message(default: 'login_page.Person')])
 
             }
-            '*' { render status: NOT_FOUND, view: '/person/LoginPage' }
+            '*' { render status: NOT_FOUND, view: '/login/index' }
         }
     }
 
-    @Secured(['permitAll'])
+    @Secured(['ROLE_USER','ROLE_ADMIN','ROLE_SUPERADMIN'])
     def LoginPage() {
-
-       Person p = personService.login(params.userName, params.password)
-        if (p == null) {
+          refreshCurrentUser()
+        if (currentPerson == null) {
             notFound()
         }else {
-            if(p.getAuthorities()[0].getAuthority()=="ROLE_SUPERADMIN"){
-                redirect(controller:'superAdmin', action: 'superAdminShow', id: p.id)
+            if(currentPerson.getAuthorities()[0].getAuthority()=="ROLE_SUPERADMIN"){
+                redirect(controller:'superAdmin', action: 'superAdminShow', id: currentPerson.id)
             }
-           else if(p.getAuthorities()[0].getAuthority()=="ROLE_ADMIN"){
-                redirect(controller:'admin', action: 'adminShow', id: p.id)
+           else if(currentPerson.getAuthorities()[0].getAuthority()=="ROLE_ADMIN"){
+                redirect(controller:'admin', action: 'adminShow', id: currentPerson.id)
             }
-            else if(p.getAuthorities()[0].getAuthority()=="ROLE_USER"){
-                redirect(action: 'show', id: p.id)
+            else if(currentPerson.getAuthorities()[0].getAuthority()=="ROLE_USER"){
+                redirect(action: 'show', id: currentPerson.id)
             }
         }
     }

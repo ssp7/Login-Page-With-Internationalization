@@ -8,7 +8,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
 
-@Secured(['permitAll'])
+@Secured(['ROLE_ADMIN'])
 class AdminController {
 
     PersonService personService
