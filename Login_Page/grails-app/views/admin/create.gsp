@@ -96,7 +96,7 @@
                     <div class="form-group">
                         <label for="userName" class="col-md-3 control"><g:message code="prompt.userName"/></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="userName" placeholder="<g:message code="prompt.userName"/>">
+                            <input type="text" class="form-control" name="username" placeholder="<g:message code="prompt.userName"/>">
                         </div>
                     </div>
                     <div class="form-group">

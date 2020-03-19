@@ -5,13 +5,13 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
 
-@EqualsAndHashCode(includes='userName')
-@ToString(includes='userName', includeNames=true, includePackage=false)
+@EqualsAndHashCode(includes='username')
+@ToString(includes='username', includeNames=true, includePackage=false)
 class Person implements Serializable {
     String firstName
     String lastName
     String emailAddress
-    String userName
+    String username
     String password
     String confirmPassword
 
@@ -25,7 +25,7 @@ class Person implements Serializable {
         firstName blank: false
         lastName blank: false
         emailAddress blank: false, email: true, unique: true
-        userName blank: false, unique: true
+        username blank: false, unique: true
         password blank: false, password: true
         confirmPassword nullable: false, blank: false, password: true, validator: { val, obj ->
             if ((val != obj.password)) {

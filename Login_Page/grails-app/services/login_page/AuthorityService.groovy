@@ -3,16 +3,26 @@ package login_page
 import grails.gorm.services.Service
 
 @Service(Authority)
-interface AuthorityService {
+class AuthorityService {
 
-    Authority get(Serializable id)
+    Authority get(Long id){
+        Authority.findById(id)
+    }
 
-    List<Authority> list(Map args)
+    List<Authority> list(Map args){
 
-    Long count()
+    }
 
-    void delete(Serializable id)
+    Long count(){
 
-    Authority save(Authority authority)
+    }
+
+    void delete(Serializable id){
+
+    }
+
+    Authority save(Authority authority){
+
+    }
 
 }

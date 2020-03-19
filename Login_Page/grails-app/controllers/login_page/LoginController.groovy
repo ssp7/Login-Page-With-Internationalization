@@ -2,7 +2,7 @@ package login_page
 
 
 import org.springframework.security.access.annotation.Secured
-
+import grails.plugin.springsecurity.authentication.*
 
 
 @Secured('permitAll')
@@ -26,5 +26,6 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
             redirect(controller: 'login', action: 'index')
         }
     }
+
 
 }

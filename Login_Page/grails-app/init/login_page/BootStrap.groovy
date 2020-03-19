@@ -17,11 +17,11 @@ class BootStrap {
         superRole.save()
 
 
-        Person admin = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email2.com", userName: "spy1", password: "12341234",confirmPassword: "12341234")
+        Person admin = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email2.com", username: "spy1", password: "12341234",confirmPassword: "12341234")
         admin.save()
-        Person user = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email3.com", userName: "spy", password: "12341234",confirmPassword: "12341234")
+        Person user = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email3.com", username: "spy", password: "12341234",confirmPassword: "12341234")
         user.save()
-        Person superAdmin = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", userName: "spySuper", password: "12341234",confirmPassword: "12341234")
+        Person superAdmin = new Person(firstName: "Soham", lastName: "Patel", emailAddress: "valid@email.com", username: "spySuper", password: "12341234",confirmPassword: "12341234")
         superAdmin.save()
         PersonAuthority.create(superAdmin,superRole)
         PersonAuthority.create(user,userRole)
@@ -44,7 +44,7 @@ class BootStrap {
             password =   RandomStringUtils.random(randomStringLength, charset.toCharArray())
             email =   RandomStringUtils.random(randomStringLength, charset.toCharArray()) + domain.get(random.nextInt(domain.size()))
             confirmPassword = password
-           p =  new Person(firstName: firstname, lastName: lastname, emailAddress: email, userName: username, password: password, confirmPassword: confirmPassword)
+           p =  new Person(firstName: firstname, lastName: lastname, emailAddress: email, username: username, password: password, confirmPassword: confirmPassword)
             p.save()
           PersonAuthority.create(p,userRole)
 

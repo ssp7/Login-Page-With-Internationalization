@@ -84,7 +84,7 @@
       <tr>
           <td>${person.firstName}</td>
           <td>${person.lastName}</td>
-          <td>${person.userName}</td>
+          <td>${person.username}</td>
           <td>${person.emailAddress}</td>
           <td>${person.password}</td>
 

@@ -11,23 +11,26 @@ import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
 
 class PersonController {
-
+    AuthorityService authorityService
     Person currentPerson
+    PersonAuthorityService personAuthorityService
     PersonService personService
     MessageSource messageSource
+
+
     static allowedMethods = [save: "POST", update: "PUT",listupdate:"PUT", delete: "DELETE"]
 
     private Person refreshCurrentUser() {
         currentPerson = Person.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName())
     }
 
+    @Secured(['ROLE_USER'])
     def show(Long id) {
         respond personService.get(Person.findById(id))
     }
 
     @Secured(['permitAll'])
     def create() {
-
         respond new Person(params)
     }
 
@@ -56,6 +59,7 @@ class PersonController {
             return
         }
         personService.save(person)
+        personAuthorityService.create(person,authorityService.get(1))
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message')

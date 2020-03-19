@@ -37,7 +37,7 @@ class PersonService {
     }
 
     Person get(String username) {
-        Person.findByUserName(username)
+        Person.findByUsername(username)
     }
 
     def get(Person person) {
@@ -45,7 +45,7 @@ class PersonService {
     }
 
     def login(String username, String confirmPassword) {
-        Person.findByUserNameAndConfirmPassword(username, confirmPassword)
+        Person.findByUsernameAndConfirmPassword(username, confirmPassword)
     }
     def count(){
         Person.count
