@@ -74,7 +74,7 @@
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="userName" type="text" class="form-control" name="userName"
+                        <input id="userName" type="text" class="form-control" name="username"
                                placeholder="<g:message code="prompt.signin"/>" value="${params.username}">
                     </div>
 

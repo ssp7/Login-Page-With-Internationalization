@@ -13,7 +13,10 @@ class Person implements Serializable {
     String username
     String password
     String confirmPassword
-
+    boolean enabled = true
+    boolean accountExpired = false
+    boolean accountLocked = false
+    boolean passwordExpired = false
     String toString() {
         firstName + " " + lastName + " " + emailAddress + " " + username + " " + password
     }

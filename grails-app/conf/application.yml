@@ -12,7 +12,7 @@ guide:
     languages:
         - es
         - it
-        - de
+        - hi
 info:
     app:
         name: '@info.app.name@'

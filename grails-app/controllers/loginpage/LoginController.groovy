@@ -24,6 +24,4 @@ class LoginController extends grails.plugin.springsecurity.LoginController {
             redirect(controller: 'login', action: 'index')
         }
     }
-
-
 }

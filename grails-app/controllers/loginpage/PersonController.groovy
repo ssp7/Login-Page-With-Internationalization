@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
 
+
 class PersonController {
     AuthorityService authorityService
     Person currentPerson
@@ -110,7 +111,6 @@ class PersonController {
         }
     }
 
-    @Secured(['ROLE_USER','ROLE_ADMIN','ROLE_SUPERADMIN'])
     def LoginPage() {
           refreshCurrentUser()
         if (currentPerson == null) {
